@@ -95,6 +95,12 @@ type FlagError struct {
 func (c *CommandType) ProcessArgs(args []string) ([]string, Error) {
 	// reconfigure flags' error handling:
 	f := func() {} // noop function
+
+	// ensure Flags is set
+	if c.Flags == nil {
+		c.Flags = &flag.FlagSet{}
+	}
+
 	c.Flags.Init(c.Name, flag.ContinueOnError)
 	c.Flags.Usage = f
 
